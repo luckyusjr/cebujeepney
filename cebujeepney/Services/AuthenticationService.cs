@@ -35,6 +35,8 @@ namespace cebujeepney.Services
         {
             try
             {
+                bool emailFound = false;
+
                 // Check Admins
                 var adminFiles = Directory.GetFiles(_fileLocatorService.GetAdminDirectory(), "A*.json");
                 foreach (var file in adminFiles)
@@ -44,14 +46,25 @@ namespace cebujeepney.Services
 
                     if (admin != null &&
                         admin.AccountType == "Admin" &&
-                        email.Equals(admin.Email, StringComparison.OrdinalIgnoreCase) &&
-                        admin.Password == password)
+                        email.Equals(admin.Email, StringComparison.OrdinalIgnoreCase))
                     {
-                        return new AuthenticationResult
+                        emailFound = true;
+                        if (admin.Password == password)
                         {
-                            IsAuthenticated = true,
-                            AccountType = admin.AccountType
-                        };
+                            return new AuthenticationResult
+                            {
+                                IsAuthenticated = true,
+                                AccountType = admin.AccountType
+                            };
+                        }
+                        else
+                        {
+                            return new AuthenticationResult
+                            {
+                                IsAuthenticated = false,
+                                ErrorMessage = "ERROR: Incorrect Password"
+                            };
+                        }
                     }
                 }
 
@@ -64,15 +77,35 @@ namespace cebujeepney.Services
 
                     if (commuter != null &&
                         commuter.AccountType == "Commuter" &&
-                        email.Equals(commuter.Email, StringComparison.OrdinalIgnoreCase) &&
-                        commuter.Password == password)
+                        email.Equals(commuter.Email, StringComparison.OrdinalIgnoreCase))
                     {
-                        return new AuthenticationResult
+                        emailFound = true;
+                        if (commuter.Password == password)
                         {
-                            IsAuthenticated = true,
-                            AccountType = commuter.AccountType
-                        };
+                            return new AuthenticationResult
+                            {
+                                IsAuthenticated = true,
+                                AccountType = commuter.AccountType
+                            };
+                        }
+                        else
+                        {
+                            return new AuthenticationResult
+                            {
+                                IsAuthenticated = false,
+                                ErrorMessage = "ERROR: Incorrect Password"
+                            };
+                        }
                     }
+                }
+
+                if (!emailFound)
+                {
+                    return new AuthenticationResult
+                    {
+                        IsAuthenticated = false,
+                        ErrorMessage = "ERROR: Email not found"
+                    };
                 }
 
                 return new AuthenticationResult

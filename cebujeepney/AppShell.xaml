@@ -5,6 +5,12 @@
        xmlns:views="clr-namespace:cebujeepney.Views"
        Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent ContentTemplate="{DataTemplate views:LoginView}"/>
+    <TabBar>
+        <ShellContent Title="Home" Icon="homelogo.png" ContentTemplate="{DataTemplate views:CommuterMV}" />
+        <ShellContent Title="Admin" Icon="homelogo.png" ContentTemplate="{DataTemplate views:AdminMV}" />
+        <ShellContent Title="My Account" Icon="profilelogo.png" ContentTemplate="{DataTemplate views:ProfileView}" />
+    </TabBar>
+
     <ShellContent  ContentTemplate="{DataTemplate views:RegisterView}" Route="RegisterView" />
+    <ShellContent  ContentTemplate="{DataTemplate views:ChangePasswordView}" Route="ChangePasswordView" />
 </Shell>

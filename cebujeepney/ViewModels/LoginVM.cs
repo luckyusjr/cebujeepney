@@ -43,6 +43,7 @@ namespace cebujeepney.ViewModels
             {
                 ErrorMessage = "Please enter both email and password.";
                 ShowError();
+                await Application.Current.MainPage.DisplayAlert("Error", ErrorMessage, "OK");
                 return;
             }
 
@@ -50,6 +51,7 @@ namespace cebujeepney.ViewModels
             {
                 ErrorMessage = "Please enter a valid email.";
                 ShowError();
+                await Application.Current.MainPage.DisplayAlert("Error", ErrorMessage, "OK");
                 return;
             }
 
@@ -59,15 +61,16 @@ namespace cebujeepney.ViewModels
             {
                 ErrorMessage = result.ErrorMessage;
                 ShowError();
+                await Application.Current.MainPage.DisplayAlert("Error", ErrorMessage, "OK");
                 return;
             }
 
             // Clear error and prepare to store session
             IsErrorVisible = false;
-            string role = result.AccountType.ToLower();
+            string role = result.AccountType?.ToLower() ?? string.Empty;
             string directory = role switch
             {
-                "user" => _authService.FileLocator.GetCommuterDirectory(),
+                "commuter" => _authService.FileLocator.GetCommuterDirectory(),
                 "admin" => _authService.FileLocator.GetAdminDirectory(),
                 _ => null
             };
@@ -81,17 +84,10 @@ namespace cebujeepney.ViewModels
 
                     switch (role)
                     {
-                        case "user":
+                        case "commuter":
                             var commuter = JsonSerializer.Deserialize<Commuter>(json);
                             if (commuter?.Email.Equals(Email, StringComparison.OrdinalIgnoreCase) == true)
                             {
-                                /*if (!commuter.IsActivated)
-                                {
-                                    ErrorMessage = "This account has been deactivated. Please contact admin.";
-                                    ShowError();
-                                    return;
-                                }*/
-
                                 SessionService.Instance.SetCommuter(commuter);
                                 break;
                             }
@@ -113,7 +109,8 @@ namespace cebujeepney.ViewModels
             Email = string.Empty;
             Password = string.Empty;
 
-            // Navigate
+            // Show success and Navigate
+            await Application.Current.MainPage.DisplayAlert("Success", "LOG IN SUCCESSFULLY", "OK");
             await NavigateByRole(role);
         }
 
@@ -127,11 +124,13 @@ namespace cebujeepney.ViewModels
         {
             switch (role)
             {
-                case "user":
+                case "commuter":
+                    // Navigate to commuter dashboard only
                     await Application.Current.MainPage.Navigation.PushAsync(new CommuterMV());
                     break;
 
                 case "admin":
+                    // Navigate to admin dashboard only
                     await Application.Current.MainPage.Navigation.PushAsync(new AdminMV());
                     break;
 

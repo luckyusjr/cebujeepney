@@ -99,6 +99,7 @@
                                TextColor="{StaticResource PrimaryBlue}"
                                Margin="4,0,0,0"/>
                         <Entry x:Name="entryUser"
+                               Text="{Binding Email}"
                                FontSize="18"
                                TextColor="{StaticResource FieldText}"
                                PlaceholderColor="{StaticResource FieldPlaceholder}"
@@ -114,6 +115,7 @@
                                TextColor="{StaticResource PrimaryBlue}"
                                Margin="4,0,0,0"/>
                         <Entry x:Name="entryPass"
+                               Text="{Binding Password}"
                                IsPassword="True"
                                FontSize="18"
                                TextColor="{StaticResource FieldText}"
@@ -125,7 +127,8 @@
                     <Button Text="Log In"
                             FontSize="22"
                             Margin="0,8,0,4"
-                            BackgroundColor="{StaticResource PrimaryBlueDark}"/>
+                            BackgroundColor="{StaticResource PrimaryBlueDark}"
+                            Command="{Binding LoginCommand}"/>
 
                     <!-- Divider with "New here?" -->
                     <Grid ColumnDefinitions="*,Auto,*" Margin="0,10,0,4" VerticalOptions="Center">

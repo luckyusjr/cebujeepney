@@ -2,11 +2,57 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="cebujeepney.Views.AdminMV"
-             Title="NewPage1">
-    <VerticalStackLayout>
-        <Label 
-            Text="ADMIN MAIN VIEW"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Admin Dashboard">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid HeightRequest="140">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#73A7FF" Offset="0" />
+                    <GradientStop Color="#2E43D9" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <VerticalStackLayout Padding="16">
+                <Image Source="cebujeeplogo.svg" HeightRequest="64" />
+                <Label Text="HOME DASHBOARD" TextColor="White" FontAttributes="Bold" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <HorizontalStackLayout Spacing="20" Padding="24" HorizontalOptions="Center">
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Button WidthRequest="80" HeightRequest="80" CornerRadius="12" BackgroundColor="White" Clicked="OnRoutePricingClicked" />
+                    <Label Text="Route Pricing" HorizontalTextAlignment="Center" TextColor="White" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Button WidthRequest="80" HeightRequest="80" CornerRadius="12" BackgroundColor="White" Clicked="OnEditAddJeepClicked" />
+                    <Label Text="Edit/Add Jeep" HorizontalTextAlignment="Center" TextColor="White" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Button WidthRequest="80" HeightRequest="80" CornerRadius="12" BackgroundColor="White" Clicked="OnAddDeleteTypeClicked" />
+                    <Label Text="Add/Delete Jeep Type" HorizontalTextAlignment="Center" TextColor="White" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="2" HeightRequest="64" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="homeicon.png" HeightRequest="28" />
+                <Label Text="Home" FontSize="12" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="profilelogo.png" HeightRequest="28" />
+                <Label Text="My Account" FontSize="12" />
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>

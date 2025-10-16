@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="cebujeepney.Views.ProfileView"
+             Title="My Account"
+             BackgroundColor="#F5F7FF">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        <!-- Header -->
+        <Grid HeightRequest="120">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#73A7FF" Offset="0" />
+                    <GradientStop Color="#2E43D9" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <VerticalStackLayout Padding="16" HorizontalOptions="Start">
+                <Image Source="cebujeeplogo.svg" HeightRequest="64" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Content -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24" Spacing="20" HorizontalOptions="Center">
+                <ImageButton Clicked="OnProfileImageClicked" BackgroundColor="Transparent" Source="profilelogo.png" HeightRequest="120" WidthRequest="120" />
+
+                <Label Text="Email" FontAttributes="Bold" TextColor="#2E43D9" />
+                <Label x:Name="EmailLabel" Text="not logged in" FontSize="16" />
+
+                <Button Text="Change Password" Clicked="OnEditProfileClicked" />
+                <Button Text="Update Info" Clicked="OnUpdateInfoClicked" />
+
+                <Button Text="Log Out" BackgroundColor="#FFFFFF" TextColor="#2E43D9" Clicked="OnLogoutClicked" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Footer spacer -->
+        <BoxView Grid.Row="2" HeightRequest="24" />
+    </Grid>
+</ContentPage>

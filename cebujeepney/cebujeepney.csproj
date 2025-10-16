@@ -82,7 +82,13 @@
 	  <MauiXaml Update="Views\AdminMV.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ChangePasswordView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\CommuterMV.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ProfileView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RegisterView.xaml">
@@ -92,7 +98,6 @@
 
 	<ItemGroup>
 	  <Folder Include="json\Admins\" />
-	  <Folder Include="json\Commuters\" />
 	</ItemGroup>
 
 </Project>

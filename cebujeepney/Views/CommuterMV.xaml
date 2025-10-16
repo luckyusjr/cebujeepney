@@ -2,11 +2,83 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="cebujeepney.Views.CommuterMV"
-             Title="NewPage1">
-    <VerticalStackLayout>
-        <Label 
-            Text="COMMUTER MAIN VIEW"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Home">
+
+    <Grid RowDefinitions="Auto,*,Auto" BackgroundColor="#F5F7FF">
+        <!-- Header -->
+        <Grid HeightRequest="140">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#73A7FF" Offset="0" />
+                    <GradientStop Color="#2E43D9" Offset="1" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <VerticalStackLayout Padding="16" Spacing="8">
+                <Image Source="cebujeeplogo.svg" HeightRequest="64" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Body -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24" Spacing="18" HorizontalOptions="Center">
+                <Frame BackgroundColor="#FFFFFF" CornerRadius="24" Padding="12" HasShadow="False" WidthRequest="350">
+                    <HorizontalStackLayout VerticalOptions="Center" Spacing="8">
+                        <Image Source="search.png" HeightRequest="24" WidthRequest="24" />
+                        <Entry Placeholder="Enter Jeep Code Here" HorizontalOptions="FillAndExpand" />
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Label Text="Find out the jeep code's route here." HorizontalTextAlignment="Center" TextColor="#2E43D9" FontAttributes="Bold" />
+                <Label Text="[LOCATION] to [LOCATION]" HorizontalTextAlignment="Center" />
+
+                <Frame WidthRequest="320" HeightRequest="220" CornerRadius="16" Padding="12">
+                    <Frame.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#1F56D9" Offset="0" />
+                            <GradientStop Color="#C64CF1" Offset="1" />
+                        </LinearGradientBrush>
+                    </Frame.Background>
+
+                    <Frame CornerRadius="12" HasShadow="False" BackgroundColor="#00000000">
+                        <Image Source="map.png" Aspect="AspectFill" />
+                        <Label Text="MAP" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="20" />
+                    </Frame>
+                </Frame>
+
+                <Button Text="Find Jeep" BackgroundColor="#73A7FF" TextColor="White" CornerRadius="28" HeightRequest="52" WidthRequest="320" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Footer Tabs (visual only) -->
+        <Grid Grid.Row="2" HeightRequest="64" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="homeicon.png" HeightRequest="28" />
+                <Label Text="Home" FontSize="12" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="price.png" HeightRequest="28" />
+                <Label Text="Fare Calculator" FontSize="12" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="updates.png" HeightRequest="28" />
+                <Label Text="Updates" FontSize="12" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center">
+                <Image Source="profilelogo.png" HeightRequest="28" />
+                <Label Text="My Account" FontSize="12" />
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
 </ContentPage>

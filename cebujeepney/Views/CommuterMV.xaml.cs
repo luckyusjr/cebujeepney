@@ -6,5 +6,10 @@ namespace cebujeepney.Views
 		{
 			InitializeComponent();
 		}
+
+        private async void OnChangePasswordClicked(object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new ChangePasswordView());
+        }
 	}
 }
