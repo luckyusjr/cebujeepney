@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="700" height="700" viewBox="0 0 700 700">
+  <defs>
+    <style>
+      .cls-1 {
+        font-size: 24px;
+        filter: url(#filter);
+        font-family: SFUIText-BoldItalicG3, "SF UI  Text";
+        font-weight: 700;
+        font-style: italic;
+      }
+    </style>
+    <filter id="filter" x="125" y="538" width="456" height="24" filterUnits="userSpaceOnUse">
+      <feFlood result="flood" flood-color="#fff"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <text id="Make_Jeepney_Rides_easy_to_navigate." data-name="Make Jeepney Rides easy to navigate." class="cls-1" x="125" y="557">Make Jeepney Rides easy to navigate.</text>
+</svg>
