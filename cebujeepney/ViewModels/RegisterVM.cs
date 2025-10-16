@@ -14,7 +14,7 @@ namespace cebujeepney.ViewModels
     public partial class RegisterVM : ObservableObject
     {
 
-        /*[ObservableProperty]
+        [ObservableProperty]
         private string newFirstName = string.Empty;
 
         [ObservableProperty]
@@ -88,17 +88,14 @@ namespace cebujeepney.ViewModels
                             // Create and save new employer
                             var newUser = new Commuter
                             {
-                                FirstName = NewFirstName,
-                                MiddleName = NewMiddleName,
-                                LastName = NewLastName,
                                 Email = NewEmail,
                                 Password = NewPassword,
-                                AccountType = "Employer"
+                                AccountType = "Commuter"
                             };
 
                             try
                             {
-                                _accountFileService.SaveEmployer(newUser);
+                                _accountFileService.SaveCommuter(newUser);
 
                                 NumberOfUsersRegistered++;
 
@@ -132,7 +129,7 @@ namespace cebujeepney.ViewModels
             {
                 await _displayAlertService.ShowAlert("Failed to Sign Up", "Please fill up the required fields.", "OK");
             }
-        }*/
+        }
 
     }
 }

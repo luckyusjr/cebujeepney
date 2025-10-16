@@ -5,6 +5,6 @@ namespace cebujeepney.Views
 		public AdminMV()
 		{
 			InitializeComponent();
-		}
+        }
 	}
 }

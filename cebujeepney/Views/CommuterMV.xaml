@@ -8,5 +8,9 @@
             Text="COMMUTER MAIN VIEW"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+
+        <Button
+            Text="Change Password"
+            BackgroundColor="Blue"/>
     </VerticalStackLayout>
 </ContentPage>

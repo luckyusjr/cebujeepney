@@ -90,7 +90,7 @@
             <ScrollView>
                 <VerticalStackLayout Padding="24,24,24,32" Spacing="16">
 
-                    <!-- Username -->
+                    <!-- Email -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Email"
                                FontSize="19"
@@ -102,7 +102,8 @@
                                FontSize="18"
                                TextColor="{StaticResource FieldText}"
                                PlaceholderColor="{StaticResource FieldPlaceholder}"
-                               HeightRequest="50" />
+                               HeightRequest="50" 
+                               Text="{Binding Email}"/>
                     </VerticalStackLayout>
 
                     <!-- Password -->
@@ -118,13 +119,15 @@
                                FontSize="18"
                                TextColor="{StaticResource FieldText}"
                                PlaceholderColor="{StaticResource FieldPlaceholder}"
-                               HeightRequest="50" />
+                               HeightRequest="50" 
+                               Text="{Binding Password}"/>
                     </VerticalStackLayout>
 
                     <!-- Log In button -->
                     <Button Text="Log In"
                             FontSize="22"
                             Margin="0,8,0,4"
+                            Command="{Binding LoginCommand}"
                             BackgroundColor="{StaticResource PrimaryBlueDark}"/>
 
                     <!-- Divider with "New here?" -->

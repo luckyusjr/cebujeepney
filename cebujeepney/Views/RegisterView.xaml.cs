@@ -8,7 +8,8 @@ namespace cebujeepney.Views
         public RegisterView()
         {
             InitializeComponent();
-            BindingContext = new RegisterVM();
+            var displayAlertService = new DisplayAlertService();
+            BindingContext = new RegisterVM(displayAlertService);
         }
     }
 }

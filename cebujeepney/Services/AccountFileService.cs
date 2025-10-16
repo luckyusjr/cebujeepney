@@ -21,7 +21,7 @@ namespace cebujeepney.Services
             Directory.CreateDirectory(_adminDir);
         }
 
-        public void SaveEmployer(Commuter user)
+        public void SaveCommuter(Commuter user)
         {
             string id = GenerateNextId(_commuterDir, "S");
             string path = Path.Combine(_commuterDir, $"{id}.json");

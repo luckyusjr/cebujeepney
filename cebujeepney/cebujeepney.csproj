@@ -73,6 +73,9 @@
 	  <Compile Update="Views\CommuterMV.xaml.cs">
 	    <DependentUpon>CommuterMV.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\ChangePassView.xaml.cs">
+	    <DependentUpon>ChangePassView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\RegisterView.xaml.cs">
 	    <DependentUpon>RegisterView.xaml</DependentUpon>
 	  </Compile>
@@ -83,6 +86,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\CommuterMV.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\ChangePassView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RegisterView.xaml">
