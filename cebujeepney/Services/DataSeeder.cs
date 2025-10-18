@@ -1,26 +1,28 @@
 ﻿// Services/DataSeeder.cs
+using Microsoft.Maui.Storage;
 using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace cebujeepney.Services;
 
 public static class DataSeeder
 {
-    public static async Task EnsureAdminAsync(FileLocatorService paths)
+    public static async Task EnsureAsync(FileLocatorService paths)
     {
-        var dir = paths.GetAdminDirectory();
-        var file = Path.Combine(dir, "A001.json");
-        if (File.Exists(file)) return;
+        await CopyIfMissing(paths, "json/Admins/A001.json");
+        // add others if you want:
+        // await CopyIfMissing(paths, "json/Commuters/S001.json");
+    }
 
-        var admin = new cebujeepney.Models.Admin
-        {
-            AccountType = "Admin",
-            Email = "admin@mail.com",
-            Password = "password"
-        };
+    static async Task CopyIfMissing(FileLocatorService paths, string assetPath)
+    {
+        var relative = assetPath.Replace("json/", ""); // "Admins/A001.json"
+        var dest = Path.Combine(paths.JsonDirectory, relative);
+        Directory.CreateDirectory(Path.GetDirectoryName(dest)!);
+        if (File.Exists(dest)) return;
 
-        var json = JsonSerializer.Serialize(admin, new JsonSerializerOptions { WriteIndented = true });
-        await File.WriteAllTextAsync(file, json);
+        using var src = await FileSystem.OpenAppPackageFileAsync(assetPath);
+        using var dst = File.Create(dest);
+        await src.CopyToAsync(dst);
     }
 }

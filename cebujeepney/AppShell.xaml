@@ -7,6 +7,4 @@
 
     <ShellContent ContentTemplate="{DataTemplate views:LoginView}"/>
     <ShellContent  ContentTemplate="{DataTemplate views:RegisterView}" Route="RegisterView" />
-    <ShellContent  ContentTemplate="{DataTemplate views:AdminMV}" Route="AdminMV" />
-    <ShellContent  ContentTemplate="{DataTemplate views:CommuterMV}" Route="CommuterMV" />
 </Shell>

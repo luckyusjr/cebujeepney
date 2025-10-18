@@ -8,8 +8,9 @@ namespace cebujeepney.Models
 {
     public class Admin : BaseUser
     {
-        public string Password { get; set; }
         public string AccountType { get; set; } = "Admin";
+        public string Password { get; set; }
+        
     }
 }
 

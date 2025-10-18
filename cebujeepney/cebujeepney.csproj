@@ -101,4 +101,10 @@
 	  <Folder Include="json\Commuters\" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<MauiAsset Include="json\**\*.json"
+				   LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+	</ItemGroup>
+
+
 </Project>

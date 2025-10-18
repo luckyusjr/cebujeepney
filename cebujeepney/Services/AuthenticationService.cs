@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using cebujeepney.Models;
-using Microsoft.Maui.Controls;
 using System;
 using System.IO;
 using System.Text.Json;
@@ -10,70 +9,54 @@ namespace cebujeepney.Services
 {
     public partial class AuthenticationResult : ObservableObject
     {
-        [ObservableProperty]
-        private bool isAuthenticated;
-
-        [ObservableProperty]
-        private string accountType;
-
-        [ObservableProperty]
-        private string errorMessage;
+        [ObservableProperty] private bool isAuthenticated;
+        [ObservableProperty] private string accountType = string.Empty;  // "Admin" | "Commuter"
+        [ObservableProperty] private string errorMessage = string.Empty;
     }
 
     public partial class AuthenticationService : ObservableObject
     {
         private readonly FileLocatorService _fileLocatorService;
+        private static readonly JsonSerializerOptions _json =
+            new() { PropertyNameCaseInsensitive = true };
 
         public AuthenticationService()
         {
             _fileLocatorService = new FileLocatorService();
         }
-        public FileLocatorService FileLocator => _fileLocatorService;
 
+        public FileLocatorService FileLocator => _fileLocatorService;
 
         public async Task<AuthenticationResult> AuthenticateAsync(string email, string password)
         {
             try
             {
-                // Check Admins
-                var adminFiles = Directory.GetFiles(_fileLocatorService.GetAdminDirectory(), "A*.json");
-                foreach (var file in adminFiles)
-                {
-                    var json = await File.ReadAllTextAsync(file);
-                    var admin = JsonSerializer.Deserialize<Admin>(json);
+                var e = (email ?? string.Empty).Trim();
+                var p = password ?? string.Empty;
 
-                    if (admin != null &&
-                        admin.AccountType == "Admin" &&
-                        email.Equals(admin.Email, StringComparison.OrdinalIgnoreCase) &&
-                        admin.Password == password)
-                    {
-                        return new AuthenticationResult
-                        {
-                            IsAuthenticated = true,
-                            AccountType = admin.AccountType
-                        };
-                    }
-                }
+                // --- Admins (A*.json) ---
+                var adminDir = _fileLocatorService.GetAdminDirectory();
+                var adminHit = await TryMatchUserAsync<Admin>(
+                    dir: adminDir,
+                    glob: "A*.json",
+                    expectedType: "Admin",
+                    email: e,
+                    password: p);
 
-                // Check Commuters
-                var commuterFiles = Directory.GetFiles(_fileLocatorService.GetCommuterDirectory(), "S*.json");
-                foreach (var file in commuterFiles)
-                {
-                    var json = await File.ReadAllTextAsync(file);
-                    var commuter = JsonSerializer.Deserialize<Commuter>(json);
+                if (adminHit.IsAuthenticated)
+                    return adminHit;
 
-                    if (commuter != null &&
-                        commuter.AccountType == "Commuter" &&
-                        email.Equals(commuter.Email, StringComparison.OrdinalIgnoreCase) &&
-                        commuter.Password == password)
-                    {
-                        return new AuthenticationResult
-                        {
-                            IsAuthenticated = true,
-                            AccountType = commuter.AccountType
-                        };
-                    }
-                }
+                // --- Commuters (S*.json) ---
+                var commuterDir = _fileLocatorService.GetCommuterDirectory();
+                var commuterHit = await TryMatchUserAsync<Commuter>(
+                    dir: commuterDir,
+                    glob: "S*.json",
+                    expectedType: "Commuter",
+                    email: e,
+                    password: p);
+
+                if (commuterHit.IsAuthenticated)
+                    return commuterHit;
 
                 return new AuthenticationResult
                 {
@@ -90,5 +73,67 @@ namespace cebujeepney.Services
                 };
             }
         }
+
+        // ---------- helpers ----------
+
+        private static async Task<AuthenticationResult> TryMatchUserAsync<T>(
+            string dir,
+            string glob,
+            string expectedType,
+            string email,
+            string password)
+        {
+            if (!Directory.Exists(dir))
+                return new AuthenticationResult { IsAuthenticated = false };
+
+            foreach (var file in Directory.EnumerateFiles(dir, glob))
+            {
+                try
+                {
+                    var json = await File.ReadAllTextAsync(file);
+                    var user = JsonSerializer.Deserialize<T>(json, _json);
+                    if (user is null) continue;
+
+                    // Extract fields in a type-safe way
+                    string? uType = null, uEmail = null, uPassword = null;
+
+                    switch (user)
+                    {
+                        case Admin a:
+                            uType = a.AccountType;
+                            uEmail = a.Email;
+                            uPassword = a.Password;   // for testing; later replace with a hash
+                            break;
+
+                        case Commuter c:
+                            uType = c.AccountType;
+                            uEmail = c.Email;
+                            uPassword = c.Password;
+                            break;
+                    }
+
+                    if (!EqualsIgnoreCase(uType, expectedType)) continue;
+                    if (!EqualsIgnoreCase(uEmail, email)) continue;
+                    if (!string.Equals(uPassword ?? string.Empty, password ?? string.Empty, StringComparison.Ordinal))
+                        continue;
+
+                    // Success
+                    return new AuthenticationResult
+                    {
+                        IsAuthenticated = true,
+                        AccountType = expectedType   // normalize: "Admin" or "Commuter"
+                    };
+                }
+                catch
+                {
+                    // Malformed JSON or read error: skip this file and continue
+                }
+            }
+
+            return new AuthenticationResult { IsAuthenticated = false };
+        }
+
+        private static bool EqualsIgnoreCase(string? a, string? b) =>
+            string.Equals(a?.Trim(), b?.Trim(), StringComparison.OrdinalIgnoreCase);
     }
 }

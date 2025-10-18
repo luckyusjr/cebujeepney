@@ -1,5 +1,5 @@
 {
-  "Password": "password",
   "AccountType": "Admin",
-  "Email": "admin@mail.com"
+  "Email": "admin@mail.com",
+  "Password": "password"
 }

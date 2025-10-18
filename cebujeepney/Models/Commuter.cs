@@ -10,8 +10,9 @@ namespace cebujeepney.Models
 {
     public class Commuter : BaseUser
     {
-        public string Password { get; set; }
         public string AccountType { get; set; } = "Commuter";
+        public string Password { get; set; }
+        
     }
 }
 
