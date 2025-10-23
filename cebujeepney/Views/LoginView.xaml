@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="cebujeepney.Views.LoginView"
-             BackgroundColor="#F5F7FF">
+             BackgroundColor="#F5F7FF"
+             Title="Home">
 
     <ContentPage.Resources>
         <!-- Colors -->
@@ -141,6 +142,11 @@
                     <Button Text="Create your Account" 
                             FontSize="22"
                             Command="{Binding GoToRegisterCommand}"/>
+
+                    <!--<Button Text="Create Default Admin" 
+                            Clicked="OnCreateAdminClicked" 
+                            BackgroundColor="Red" 
+                            TextColor="White"/>*-->
 
                     <!-- Quote -->
                     <Label Text="Make Jeepney Rides easy to navigate."

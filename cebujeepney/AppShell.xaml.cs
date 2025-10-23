@@ -6,6 +6,7 @@ namespace cebujeepney
         public AppShell()
         {
             InitializeComponent();
+            Routing.RegisterRoute(nameof(CommuterSettingsView), typeof(CommuterSettingsView));
         }
     }
 }

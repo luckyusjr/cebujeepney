@@ -73,8 +73,11 @@
 	  <Compile Update="Views\CommuterMV.xaml.cs">
 	    <DependentUpon>CommuterMV.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\ChangePassView.xaml.cs">
-	    <DependentUpon>ChangePassView.xaml</DependentUpon>
+	  <Compile Update="Views\ChangePasswordView.xaml.cs">
+	    <DependentUpon>ChangePasswordView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\CommuterSettingsView.xaml.cs">
+	    <DependentUpon>CommuterSettingsView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\RegisterView.xaml.cs">
 	    <DependentUpon>RegisterView.xaml</DependentUpon>
@@ -88,7 +91,10 @@
 	  <MauiXaml Update="Views\CommuterMV.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\ChangePassView.xaml">
+	  <MauiXaml Update="Views\ChangePasswordView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\CommuterSettingsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RegisterView.xaml">
@@ -102,8 +108,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiAsset Include="json\**\*.json"
-				   LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiAsset Include="json\**\*.json" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
 

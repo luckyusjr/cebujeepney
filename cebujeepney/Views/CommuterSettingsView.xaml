@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="cebujeepney.Views.CommuterSettingsView">
+    <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center">
+
+        <Image
+            Source="settingsicon.png"
+            HorizontalOptions="Center"
+            WidthRequest="50"
+            />
+
+        <Label 
+            Text="My Account"
+            FontSize="28"
+            FontAttributes="Bold"
+            HorizontalOptions="Center" 
+            Margin="0,0,0,100"/>
+
+        <Button 
+            Text="Change Password"
+            Command="{Binding ChangePassCommand}"
+            HeightRequest="52"
+            CornerRadius="26"
+            TextColor="White"
+            FontSize="16"
+            FontAttributes="Bold">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#73A7FF" Offset="0" />
+                            <GradientStop Color="DarkBlue"  Offset="1" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+        </Button>
+
+        <Button 
+            Text="Log Out"
+            Command="{Binding LogoutCommand}"
+            HeightRequest="52"
+            CornerRadius="26"
+            TextColor="White"
+            FontSize="16"
+            FontAttributes="Bold">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#73A7FF" Offset="0" />
+                    <GradientStop Color="#C64CF1" Offset="1" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+
+    </VerticalStackLayout>
+</ContentPage>

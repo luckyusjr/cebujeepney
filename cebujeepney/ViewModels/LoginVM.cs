@@ -36,24 +36,22 @@ namespace cebujeepney.ViewModels
             _authService = new AuthenticationService();
         }
 
-
         [RelayCommand]
-
         private async Task Login()
         {
-            await DataSeeder.EnsureAsync(_authService.FileLocator);
-
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
             {
                 ErrorMessage = "Please enter both email and password.";
                 ShowError();
+                await Application.Current.MainPage.DisplayAlert("Error", ErrorMessage, "OK");
                 return;
             }
 
-            if(!Email.Contains("@"))
+            if (!Email.Contains("@"))
             {
                 ErrorMessage = "Please enter a valid email.";
                 ShowError();
+                await Application.Current.MainPage.DisplayAlert("Error", ErrorMessage, "OK");
                 return;
             }
 
@@ -63,16 +61,17 @@ namespace cebujeepney.ViewModels
             {
                 ErrorMessage = result.ErrorMessage;
                 ShowError();
+                await Application.Current.MainPage.DisplayAlert("Error", ErrorMessage, "OK");
                 return;
             }
 
             // Clear error and prepare to store session
             IsErrorVisible = false;
-            string role = result.AccountType;
+            string role = result.AccountType?.ToLower() ?? string.Empty;
             string directory = role switch
             {
-                "Commuter" => _authService.FileLocator.GetCommuterDirectory(),
-                "Admin" => _authService.FileLocator.GetAdminDirectory(),
+                "commuter" => _authService.FileLocator.GetCommuterDirectory(),
+                "admin" => _authService.FileLocator.GetAdminDirectory(),
                 _ => null
             };
 
@@ -85,33 +84,22 @@ namespace cebujeepney.ViewModels
 
                     switch (role)
                     {
-                        case "Commuter":
+                        case "commuter":
                             var commuter = JsonSerializer.Deserialize<Commuter>(json);
                             if (commuter?.Email.Equals(Email, StringComparison.OrdinalIgnoreCase) == true)
                             {
-                                /*if (!commuter.IsActivated)
-                                {
-                                    ErrorMessage = "This account has been deactivated. Please contact admin.";
-                                    ShowError();
-                                    return;
-                                }*/
-
                                 SessionService.Instance.SetCommuter(commuter);
                                 break;
                             }
                             break;
 
-                        case "Admin":
+                        case "admin":
                             var admin = JsonSerializer.Deserialize<Admin>(json);
                             if (admin?.Email.Equals(Email, StringComparison.OrdinalIgnoreCase) == true)
                             {
                                 SessionService.Instance.SetAdmin(admin);
                                 break;
                             }
-                            break;
-
-                        default:
-                            await Application.Current.MainPage.DisplayAlert("Error", "Unknown account type.", "OK");
                             break;
                     }
                 }
@@ -121,7 +109,8 @@ namespace cebujeepney.ViewModels
             Email = string.Empty;
             Password = string.Empty;
 
-            // Navigate
+            // Show success and Navigate
+            await Application.Current.MainPage.DisplayAlert("Success", "LOG IN SUCCESSFULLY", "OK");
             await NavigateByRole(role);
         }
 
@@ -133,28 +122,32 @@ namespace cebujeepney.ViewModels
 
         private async Task NavigateByRole(string role)
         {
-            switch (role)
+            Page nextPage = role switch
             {
-                case "user":
-                    await Application.Current.MainPage.Navigation.PushAsync(new CommuterMV());
-                    break;
+                "commuter" => new CommuterMV(),
+                "admin" => new AdminMV(),
+                _ => null
+            };
 
-                case "admin":
-                    await Application.Current.MainPage.Navigation.PushAsync(new AdminMV());
-                    break;
-
-                default:
-                    await Application.Current.MainPage.DisplayAlert("Error", "Unknown account type.", "OK");
-                    break;
+            if (nextPage is null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Unknown account type.", "OK");
+                return;
             }
+
+            // RESET the navigation stack: no “back” possible.
+            Application.Current.MainPage = new NavigationPage(nextPage);
+
+            // Optional: style the bar
+            // ((NavigationPage)Application.Current.MainPage).BarTextColor = Colors.White;
+            // ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromArgb("#2E43D9");
         }
+
 
         [RelayCommand]
         private async Task GoToRegister()
         {
             await Application.Current.MainPage.Navigation.PushAsync(new RegisterView());
         }
-
- 
     }
 }
